@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}403 Forbidden - Access Denied{% endblock %}
+
+{% block content %}
+<div class="glass-card form-card" style="text-align: center; max-width: 520px;">
+    <div style="font-size: 3.5rem; margin-bottom: 1rem;">🚫</div>
+    <h1 style="font-size: 1.85rem; font-weight: 700; color: #ef4444;">403 - Permission Denied</h1>
+    <p style="color: var(--text-muted); margin: 1rem 0 2rem 0;">
+        {{ message|default:"You do not have the required permissions to access this page." }}
+    </p>
+    <a href="{% url 'user_dashboard' %}" class="btn btn-primary">
+        Return to My Dashboard
+    </a>
+</div>
+{% endblock %}

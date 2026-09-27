@@ -1,0 +1,17 @@
+<nav class="navbar">
+    <a href="{% url 'user_dashboard' %}" class="navbar-brand">
+        ⚡ <span>UserPortal</span>
+    </a>
+    <ul class="nav-links">
+        {% if user.is_authenticated %}
+            {% if user.is_superuser %}
+                <li><a href="{% url 'superuser_dashboard' %}" class="nav-link">Admin Dashboard</a></li>
+            {% endif %}
+            <li><a href="{% url 'user_dashboard' %}" class="nav-link">My Profile</a></li>
+            <li><a href="{% url 'logout' %}" class="nav-btn-logout">Logout</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+            <li><a href="{% url 'register' %}" class="btn btn-primary btn-sm">Register</a></li>
+        {% endif %}
+    </ul>
+</nav>

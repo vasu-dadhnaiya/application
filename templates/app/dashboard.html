@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}User Dashboard - {{ user_name }}{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+
+    <!-- Welcome Header Banner -->
+    <div class="glass-card" style="margin-bottom: 2rem; background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25)); border: 1px solid rgba(168, 85, 247, 0.3);">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1 style="font-size: 2rem; font-weight: 700; color: #ffffff;">Welcome, {{ user_name }}!</h1>
+                <p style="color: #cbd5e1; margin-top: 0.3rem;">Here is your complete account profile overview.</p>
+            </div>
+            {% if user.is_superuser %}
+                <a href="{% url 'superuser_dashboard' %}" class="btn btn-primary">
+                    🛡️ Open Superuser Dashboard
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Profile Information Card -->
+    <div class="glass-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid var(--card-border); padding-bottom: 1rem;">
+            <h3 style="font-size: 1.25rem; font-weight: 600;">Personal Information</h3>
+            <span class="badge {% if user.is_superuser %}badge-superuser{% else %}badge-user{% endif %}">
+                {% if user.is_superuser %}Superuser Admin{% else %}Standard User{% endif %}
+            </span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+            <div style="background: rgba(15, 23, 42, 0.5); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">User Name</div>
+                <div style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-top: 0.35rem;">{{ profile.full_name }}</div>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.5); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Email Address</div>
+                <div style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-top: 0.35rem;">{{ user.email }}</div>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.5); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Contact Number</div>
+                <div style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-top: 0.35rem;">{{ profile.contact_number }}</div>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.5); padding: 1.25rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 0.5px;">Age</div>
+                <div style="font-size: 1.15rem; font-weight: 600; color: #ffffff; margin-top: 0.35rem;">{{ profile.age }} years old</div>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+            <a href="{% url 'edit_profile' %}" class="btn btn-primary">
+                ✏️ Edit Profile
+            </a>
+            <a href="{% url 'logout' %}" class="btn btn-secondary">
+                Logout
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

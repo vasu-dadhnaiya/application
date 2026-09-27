@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit User Information{% endblock %}
+
+{% block content %}
+<div class="glass-card form-card">
+    <div class="card-header">
+        <h2 class="card-title">
+            {% if is_self_edit %}
+                Edit Profile
+            {% else %}
+                Edit User: {{ target_user.username }}
+            {% endif %}
+        </h2>
+        <p class="card-subtitle">Update user contact details and personal information</p>
+    </div>
+
+    <form method="POST" action="" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="alert alert-error">
+                {% for error in form.non_field_errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.full_name.id_for_label }}">User Name (Full Name)</label>
+            {{ form.full_name }}
+            {% if form.full_name.errors %}
+                {% for error in form.full_name.errors %}
+                    <span class="error-msg">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.email.id_for_label }}">Email Address</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <span class="error-msg">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.contact_number.id_for_label }}">Contact Number</label>
+            {{ form.contact_number }}
+            {% if form.contact_number.errors %}
+                {% for error in form.contact_number.errors %}
+                    <span class="error-msg">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="{{ form.age.id_for_label }}">Age</label>
+            {{ form.age }}
+            {% if form.age.errors %}
+                {% for error in form.age.errors %}
+                    <span class="error-msg">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+
+        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-primary btn-block">
+                Save Changes
+            </button>
+            <a href="{% if is_self_edit %}{% url 'user_dashboard' %}{% else %}{% url 'superuser_dashboard' %}{% endif %}" class="btn btn-secondary" style="text-align: center;">
+                Cancel
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
